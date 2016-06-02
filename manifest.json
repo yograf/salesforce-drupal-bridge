@@ -1,7 +1,7 @@
 {
   "name": "SalesForce Drupal bridge",
   "description": "Add icon on salesforce pages to show the mapped entity on your Drupal site.",
-  "version": "1.5",
+  "version": "1.61",
   "author": "Yogev Priel",
   "manifest_version": 2,
   "minimum_chrome_version": "20",
@@ -12,8 +12,11 @@
     "clipboardWrite",
     "notifications",
     "http://*/",
-    "https://*/"
+    "https://*/",
+    "<all_urls>",
+    "chrome://favicon/"
   ],
+  "content_security_policy": "script-src 'self' https://app.something.com; object-src 'self'",
   "options_ui": {
     "page": "options.html",
     "chrome_style": true
@@ -25,7 +28,8 @@
   },
   "page_action": {
     "default_icon": "images/icon-16.png",
-    "default_title": "Open mapped entity"
+    "default_title": "Open mapped object",
+    "default_popup": "popup.html"
   },
   "background": {
     "scripts": [ "background.js" ],

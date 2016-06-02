@@ -12,14 +12,21 @@ chrome.runtime.onInstalled.addListener(function() {
     }]);
   });
 });
+function fetchFavicon(url) {
+    return new Promise(function(resolve, reject) {
+        var img = new Image();
+        img.onload = function () {
+            var canvas = document.createElement("canvas");
+            canvas.width =this.width;
+            canvas.height =this.height;
 
-chrome.pageAction.onClicked.addListener(function(tab) {
-  chrome.storage.sync.get({drupal_url: ''}, function(items) {
-    if (items.drupal_url) {
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(this, 0, 0);
 
-      var urlObj = new URL(tab.url);
-     var sfid = urlObj.pathname.substring(1);
-     chrome.tabs.create({ url: items.drupal_url + "/salesforce/" + sfid})
-    }
-  });
-});
+            var dataURL = canvas.toDataURL("image/png");
+            resolve(dataURL);
+        };
+        img.src = 'chrome://favicon/' + url;
+    });
+}
+
